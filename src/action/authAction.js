@@ -6,6 +6,8 @@ import jwt from 'jsonwebtoken';
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
 export const LOGUP = 'LOGUP';
+export const KEEP_IN = 'KEEP_IN';
+
 
 
 export const logIn = (username, password) => dispatch => {
@@ -45,24 +47,18 @@ export const logUp = (username, password, email, role) => dispatch => {
     );
 };
 const generateToken = user => {
-  console.log('user', user);
-
   let userData = {
     username: user.username,
     userEamil: user.email,
     capabilities: user.role,
   };
   let token = jwt.sign(userData, 'ashurFood');
-  return setLoginState(true, token, user);
-  //   validateToken(token);
-  console.log('token', token, 'user', user);
-
+  return setLoginState(true, token, userData);
 };
 
 const validateToken = token =>{
   try {
     let user = jwt.verify(token, 'ashurFood');
-    console.log('user', user);
     return setLoginState(true, token, user);
   } catch {
     console.error('token invalid');
@@ -71,7 +67,6 @@ const validateToken = token =>{
 };
 const setLoginState = (loggedIn, token, user) =>{
   cookie.save('auth', token);
-  console.log('loggedIn, token, user',loggedIn, token, user);
   localStorage.setItem('userInfo', JSON.stringify(user));
   return({token, loggedIn, user,loading: false});
 };
@@ -82,11 +77,9 @@ export const logOut = () => dispatch => {
     payload: setLoginState(false, null, {}),
   });
 };
-
-
-// componentDidMount(){
-//   const qs = new URLSearchParams(window.location.search);
-//   const cookieToken = cookie.load('auth');
-//   const token = qs.get('token') || cookieToken || null;
-//   validateToken(token);
-// }
+export const keepIn = (token)=> dispatch => {
+  dispatch ({
+    type: KEEP_IN,
+    payload: validateToken(token),
+  });
+};

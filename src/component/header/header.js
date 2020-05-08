@@ -1,19 +1,16 @@
 /* eslint-disable no-unused-vars */
-
-
 import React from 'react';
 import '../header/header.scss';
 import logo from '../../assest/mainLogo.PNG';
 import { connect } from 'react-redux';
 import {Link , NavLink} from 'react-router-dom';
-import { logOut } from '../../action/authAction.js';
-// import ReactWOW from 'react-wow';
 import WOW from 'wowjs';
 import SignForm from '../sign-forms/signForm.js';
 import $ from 'jquery';
 import {When} from '../if/index.js';
 import ChatCh from '../chat/chat.js';
 import AOS from 'aos';
+import { logOut } from '../../action/authAction.js';
 window.$ = window.jQuery = require('jquery');
 
 const If = props => {
@@ -35,9 +32,6 @@ class Header extends React.Component{
     wow.init();
   }
   handleClick = () =>{
-    // this.setState( prevState => ({
-    //   isToggle : !prevState.isToggle,
-    // }));
     $(document).ready(function() {
       $(document).delegate('.open', 'click', function(event){
         $(this).addClass('oppenned');
@@ -54,7 +48,6 @@ class Header extends React.Component{
   };
   handleSignClick =() => {
     this.setState(state =>({showSignForm : true}));
-    console.log(this.state);
   }
   closeSignForm =() => {
     this.setState(state =>({showSignForm : false}));
@@ -75,10 +68,7 @@ class Header extends React.Component{
             </a>
           </div>
           <link rel="stylesheet" href="animate.min.css"></link>
-          {/* <div className="wow pulse slower" data-wow-offset='50' data-wow-delay="0s" data-wow-iteration="500">
-            <h1>Food Ashur's</h1>
-          </div> */}
-          {this.props.loggedIn && (
+          { this.props.loggedIn && (
             <div  className="open" onClick={this.handleClick}>
               <span className="cls"></span>
               <span>
@@ -94,14 +84,11 @@ class Header extends React.Component{
                   </li>
                   <li>
                     <If condition={this.props.loggedIn}>
-                      <a href="#header" onClick={this.props.logOut} >Log Out!</a>
+                      <a href="/" onClick={this.props.logOut} >Log Out!</a>
                     </If>
                     <If condition={!this.props.loggedIn}>
                       <a href="#header" onClick={this.handleSignClick}>Log In</a>
-                      {/* <button onClick={this.handleSignClick} className="signForm-button" >
-            SignIn</button> */}
                     </If>
-                    {/* <a href="#setting" title="setting">Log Out</a> */}
                   </li>
                 </ul>
               </span>
@@ -119,16 +106,12 @@ class Header extends React.Component{
         <When condition={this.state.showSignForm}>
           <SignForm close={this.closeSignForm}  />
         </When>
-
-        {/* <When condition={!this.state.showSignForm}>
-        </When> */}
         <If condition={!this.props.loggedIn}>
           <button onClick={this.handleSignClick} data-aos="fade-up" data-aos-duration="2000" className="signForm-button" >
             SignIn</button>
         </If>
         <div className="header-page" id="header"></div>
         <div className="quotes-div">
-          {/* <ul class="slideshow"> */}
           <div ><p data-aos="flip-up" className="quote">Food charity</p></div>
           <div><p  data-aos="flip-down" className="quote">&nbsp;&nbsp;Donation</p></div>
           <div><p data-aos="flip-up" className="quote">&nbsp;&nbsp;Humanity</p></div>
@@ -144,6 +127,6 @@ const mapStateToProps = state => ({
   loading: state.authReducer.loading,
   user: state.authReducer.user,
 });
-const mapDispatchToProps = { logOut };
+const mapDispatchToProps = {logOut};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

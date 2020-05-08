@@ -1,15 +1,8 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-unused-vars */
 import React from 'react';
-import { LoginContext } from './context.js';
-// import { JsonWebTokenError } from 'jsonwebtoken';
-import { GoogleLoginButton} from 'react-social-login-buttons';
 import { connect } from 'react-redux';
 import { logIn } from '../../action/authAction.js';
-// import React from 'react';
-
-// import { GoogleLogout } from 'react-google-login';
-// import { LoginContext } from '../auth/context.js';
 
 const If = props => {
   return props.condition ? props.children : null;
@@ -17,8 +10,6 @@ const If = props => {
 
 
 class Login extends React.Component {
-  static contextType = LoginContext;
-
   constructor(props) {
     super(props);
     this.state = {
@@ -35,10 +26,8 @@ class Login extends React.Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    // this.context.login(this.state.username, this.state.password);
     this.props.logIn(this.state.username, this.state.password);
     e.target.reset();
-
   }
 
   render() {
@@ -47,16 +36,16 @@ class Login extends React.Component {
         <If condition={!this.props.loggedIn}>
           <form onSubmit={this.handleSubmit} className="sign-in-htm">
             <div className="group">
-              <label for="user" className="label">Username</label>
+              <label htmlFor="user" className="label">Username</label>
               <input name="username" type="user" className="input" placeholder="Enter your name" onChange={this.handleChange}/>
             </div>
             <div className="group">
-              <label for="pass" class="label">Password</label>
+              <label htmlFor="pass" className="label">Password</label>
               <input name="password" type="password" className="input" data-type="password" placeholder="Enter your password" onChange={this.handleChange}/>
             </div>
             <div className="group">
-              <input name="check" type="checkbox" className="check" checked />
-              <label for="check"><span className="icon"></span> Keep me Signed in</label>
+              <input name="check" type="checkbox" className="check" />
+              <label htmlFor="check"><span className="icon"></span> Keep me Signed in</label>
             </div>
             <div className="group">
               <button  className="button" >Log In!</button>

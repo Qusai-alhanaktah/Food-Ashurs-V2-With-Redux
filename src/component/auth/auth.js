@@ -1,31 +1,46 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
-// import { LoginContext } from './context.js';
 import { connect } from 'react-redux';
-import { logUp } from '../../action/authAction.js';
+import Recipients from '../resipient/resipient.js';
+import Donor from '../donor/donor.js';
+import { keepIn } from '../../action/authAction.js';
+import cookie from 'react-cookies';
+
 const If = props => {
   return props.condition ? props.children : null;
 };
 
 class Auth extends React.Component{
-  // static contextType = LoginContext;
+  constructor(props){
+    super(props);
+  }
+  componentDidMount(){
+    const qs = new URLSearchParams(window.location.search);
+    const cookieToken = cookie.load('auth');
+    const token = qs.get('token') || cookieToken || null;
+    this.props.keepIn(token);
+  }
 
   render() {
-    let okToRender = false;
-
+    let okToRenderRecipient = false;
+    let okToRenderDonor = false;
     try {
-      okToRender =
-          this.props.loggedIn &&
-            (this.props.capability
-              ? this.props.user.capabilities.includes(this.props.capability)
-              : true);
+      if(this.props.loggedIn){
+        if(this.props.user.capabilities === 'donor')  okToRenderDonor = true;
+        else if(this.props.user.capabilities === 'recipient')  okToRenderRecipient = true;
+      }
     } catch {
       console.warn('not authorized to do that');
     }
     return (
-      <If condition={okToRender}>
-        <div>{this.props.children}</div>
-      </If>
+      <>
+        <If condition={okToRenderRecipient}>
+          <Recipients />
+        </If>
+        <If condition={okToRenderDonor}>
+          <Donor />
+        </If>
+      </>
     );
   }
 }
@@ -34,6 +49,6 @@ const mapStateToProps = state => ({
   loading: state.authReducer.loading,
   user: state.authReducer.user,
 });
-const mapDispatchToProps = { logUp };
+const mapDispatchToProps = { keepIn };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Auth);

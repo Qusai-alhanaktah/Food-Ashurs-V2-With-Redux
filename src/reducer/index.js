@@ -1,6 +1,6 @@
 import {  combineReducers } from 'redux';
 import {GET_ALL_DONOR, GET_ALL_RECIPIENT, NEW_RECIPIENT, DELETE_RECIPIENT, NEW_DONOR, DELETE_DONOR, UPDATE_DONOR} from '../action/';
-import { LOGIN, LOGOUT, LOGUP } from '../action/authAction.js';
+import { LOGIN, LOGOUT, LOGUP, KEEP_IN } from '../action/authAction.js';
 
 const initialState = {
   donorItems: [],
@@ -38,15 +38,15 @@ const initialStateAuth = {
   user: {},
 };
 export const authReducer = function (state = initialStateAuth, action) {
-    console.log(action);
-    
   switch (action.type) {
   case LOGIN:
-    return {...state, loggedIn: action.payload.loggedIn, loading: action.payload.loading, user: action.payload.user };
+    return {...state, loggedIn: action.payload.loggedIn, loading: action.payload.loading, user: action.payload.user, token: action.payload.token };
   case LOGOUT:
-    return {...state, loggedIn: action.payload.loggedIn, loading: action.payload.loading, user: action.payload.user };
+    return {...state, loggedIn: action.payload.loggedIn, loading: action.payload.loading, user: action.payload.user, token: action.payload.token };
   case LOGUP:
-    return {...state, loggedIn: action.payload.loggedIn, loading: action.payload.loading, user: action.payload.user };
+    return {...state, loggedIn: action.payload.loggedIn, loading: action.payload.loading, user: action.payload.user, token: action.payload.token };
+  case KEEP_IN:
+    return {...state, loggedIn: action.payload.loggedIn, loading: action.payload.loading, user: action.payload.user, token: action.payload.token };
   default:
     return state;
   }

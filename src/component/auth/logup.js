@@ -1,10 +1,5 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
-import { LoginContext } from './context.js';
-// import { JsonWebTokenError } from 'jsonwebtoken';
-import { GoogleLoginButton} from 'react-social-login-buttons';
-import cookie from 'react-cookies';
-import jwt from 'jsonwebtoken';
 import GoogleLogin from 'react-google-login';
 import { connect } from 'react-redux';
 import { logUp } from '../../action/authAction.js';
@@ -14,8 +9,6 @@ const If = props => {
 };
 
 class Logup extends React.Component {
-  static contextType = LoginContext;
-
   constructor(props) {
     super(props);
     this.state = {
@@ -32,19 +25,16 @@ class Logup extends React.Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    // this.context.logup(this.state.username, this.state.password, this.state.email, this.state.role);
     this.props.logUp(this.state.username, this.state.password, this.state.email, this.state.role);
     e.target.reset();
   }
   responseGoogle1 = (response) => {
     this.setState({ userDetails: response.profileObj, isUserLoggedIn: true });
-    //  let id_token = response.getAuthResponse().id_token;
     this.props.logUp(response.profileObj.givenName, response.profileObj.googleId,  response.profileObj.email, 'recipient');
   };
 
  responseGoogle2 = (response) => {
    this.setState({ userDetails: response.profileObj, isUserLoggedIn: true });
-   //  let id_token = response.getAuthResponse().id_token;
    this.props.logUp(response.profileObj.givenName, response.profileObj.googleId,  response.profileObj.email, 'donor');
  }
  render() {
@@ -53,15 +43,15 @@ class Logup extends React.Component {
        <If condition={!this.props.loggedIn}>
          <form onSubmit={this.handleSubmit} className="sign-up-htm">
            <div className="group">
-             <label for="user" className="label">Username</label>
+             <label htmlFor="user" className="label">Username</label>
              <input name="username" type="text" className="input" placeholder="enter your name" onChange={this.handleChange}/>
            </div>
            <div className="group">
-             <label for="pass" className="label">Password</label>
+             <label htmlFor="pass" className="label">Password</label>
              <input name="password" type="password" className="input" data-type="password" placeholder="Enter your password" onChange={this.handleChange}/>
            </div>
            <div className="group">
-             <label for="pass" className="label">Email Address</label>
+             <label htmlFor="pass" className="label">Email Address</label>
              <input name="email" type="email" className="input" placeholder="username@gmail.com" onChange={this.handleChange}/>
            </div>
            <div className="radio">

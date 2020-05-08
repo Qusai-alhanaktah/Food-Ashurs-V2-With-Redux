@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
 import './slideshowTwo.scss';
-// import 'swiper/swiper.scss';
 import Swiper from 'react-id-swiper';
 import img1 from '../../assets/img-home-1.jpg';
 import img2 from '../../assets/img-home-2.jpg';
@@ -11,7 +10,6 @@ import img6 from '../../assets/img-home-6.jpg';
 import img7 from '../../assets/img-home-7.jpg';
 const SimpleSwiperWithParams = () => {
   const params = {
-    // direction: 'vertical',
     loop: true,
     effect: 'coverflow',
     grabCursor: true,
@@ -22,7 +20,6 @@ const SimpleSwiperWithParams = () => {
       stretch: 30,
       depth: 50,
       modifier: 1,
-      // slideShadows : true,
     },
     navigation: {
       nextEl: '.swiper-button-next',

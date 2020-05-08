@@ -247,7 +247,6 @@ function Recipients (props){
                 <button onClick={()=> addCart(item)} className="donor-item-button"><i className="fa fa-cart-plus cart" ></i>Add To Cart</button>
               </div>
             </div>;
-          // </div>
           })}
         </div>
 
@@ -295,22 +294,6 @@ function Recipients (props){
                 </Model>
               </div>
             </When>
-
-            {/* <When condition={showDetails}>
-              <Model title='cart details' close={toggleDetails}>
-                <div className="cart-details">
-                  <header>
-                    <li>Name: {details.name}   </li>
-                    <li>Donation Type: {details.type}   </li>
-                    <li>Available Time: {details.available_time}   </li>
-                  </header>
-                  <div className="item">
-            Food Amount: {details.amount}
-                  </div>
-                </div>
-              </Model>
-            </When> */}
-
             <When condition={showUpdate}>
               <div className="cart-details-m">
                 <Model title='cart update' close={toggleUpdate}>
